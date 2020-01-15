@@ -1,0 +1,111 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vue.js Pet Depot</title>
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/app.css"/>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="m-auto">
+<div id="app">
+    <header>
+        <h1 class="text-3xl font-bold mb-4" v-text="sitename"></h1>
+    </header>
+    <main>
+        <div class="flex flex-wrap product">
+            <div class="w-full sm:w-1/4">
+                <figure>
+                    <img class="m-auto" :src="product.image">
+                </figure>
+            </div>
+            <div class="w-full sm:w-2/4 ml-10">
+                <h1 class="text-2xl pb-2" v-text="product.title"></h1>
+                <p v-html="product.description"></p>
+                <p class="price mt-5"> {{ product.price | formatPrice }}</p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script type="text/javascript">
+    var APP_LOG_LIFECYCLE_EVENTS = false;
+
+    var webstore = new Vue({
+        el: "#app",
+        data: {
+            sitename: "Vue.js Pet Depot",
+            product: {
+                id: 1001,
+                title: 'Корм для котиков, 10кг',
+                description: "<em>Лучший</em> на свете корм для котиков," +
+                    " упаковка 10кг.",
+                price: 2000,
+                image: "assets/images/product-fullsize.png"
+            }
+        },
+        filters: {
+            formatPrice: function(price) {
+                if (!parseInt(price)) {
+                    return "";
+                }
+                // if (price > 99999) {
+                //     var priceString = (price / 100).toFixed(2);
+                //     var priceArray = priceString.split("").reverse();
+                //     console.log(priceString);
+                //     console.log('priceArray ', priceArray);
+                //     var index = 3;
+                //     while (priceArray.length > index + 3) {
+                //         priceArray.splice(index+3, 0, ",");
+                //         index += 4;
+                //     }
+                //     return "$" + priceArray.reverse().join("");
+                return price.toString().replace('.', ',') + " ₽";
+            }
+        },
+
+        //хуки для теста
+        beforeCreate: function() {
+            if (APP_LOG_LIFECYCLE_EVENTS) {
+                console.log("beforeCreate");
+            }
+        },
+        created: function() {
+            if (APP_LOG_LIFECYCLE_EVENTS) {
+                console.log("created");
+            }
+        },
+        beforeMount: function() {
+            if (APP_LOG_LIFECYCLE_EVENTS) {
+                console.log("beforeMount");
+            }
+        },
+        mounted:  function() {
+            if (APP_LOG_LIFECYCLE_EVENTS) {
+                console.log("mounted");
+            }
+        },
+        beforeUpdate:  function() {
+            if (APP_LOG_LIFECYCLE_EVENTS) {
+                console.log("beforeUpdate");
+            }
+        },
+        updated:  function() {
+            if (APP_LOG_LIFECYCLE_EVENTS) {
+                console.log("updated");
+            }
+        },
+        beforeDestroy:  function() {
+            if (APP_LOG_LIFECYCLE_EVENTS) {
+                console.log("beforeDestroy ");
+            }
+        },
+        destroyed:  function() {
+            if (APP_LOG_LIFECYCLE_EVENTS) {
+                console.log("destroyed");
+            }
+        }
+    });
+</script>
+</body>
+</html>
